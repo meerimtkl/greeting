@@ -2,6 +2,8 @@ package kg.megacom.controllers;
 
 import kg.megacom.controllers.base.CrudMethods;
 import kg.megacom.models.Position;
+import kg.megacom.services.PositionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -14,34 +16,32 @@ public class PositionController implements CrudMethods<Position> {
     //update
     //select
     //delete
+    @Autowired
+    PositionService positionService;
     @Override
     public List<Position> findAll() {
-        return Arrays.asList(
-                new Position(1l, "Head", true),
-                new Position(2l, "middle", true),
-                new Position(3l, "senior", true),
-                new Position(4l, "junior", true));
+        return positionService.findAll();
     }
 
     @Override
-    public Position getById(@PathVariable Long id) {
+    public Position getById( Long id) {
         return new Position(id, "Head", true);
     }
 
     @Override
-    public Position save(@RequestBody Position position) {
-        position.setId(100l);
-        return position;
+    public Position save(Position position) {
+
+        return positionService.save( position);
     }
 
     @Override
-    public Position update(@RequestBody Position position) {
-        position.setName("New Position");
-        return position;
+    public Position update( Position position) {
+
+        return positionService.update(position);
     }
 
     @Override
-    public Position remove(@PathVariable Long id) {
-        return new Position(id, "Head", false);
+    public Position remove( Long id) {
+        return null;
     }
 }
